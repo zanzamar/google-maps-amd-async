@@ -1,0 +1,15 @@
+.DS_Store
+*.swp
+
+
+# NPM / Grunt / Bower
+/node_modules/
+.npm-debug.log
+tmp
+/bower_components/
+
+# IDE's
+*.tmproj
+
+# packaged files
+/*.tgz

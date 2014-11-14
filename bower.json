@@ -1,0 +1,12 @@
+{
+	"name": "google-maps-amd-async",
+	"version": "1.0.0",
+	"main": "dist/main.js",
+	"ignore": [
+		"**/.*",
+		"build",
+		"*.md",
+		"Gruntfile.js",
+		"package.json"
+	]
+}
