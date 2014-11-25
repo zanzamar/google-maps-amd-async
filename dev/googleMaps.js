@@ -64,7 +64,7 @@ define([
 		 * Provides auto complete functionality on a text input element.
 		 *
 		***********************************************************************/
-		autoComplete: function( args, placeChanged ) {
+		autoComplete: function( args ) {
 			var $je = args.$je;
 			if ( !$je.hasClass( "google-auto-complete-attached" ) ) {
 				$je.addClass( "google-auto-complete-attached" );
@@ -91,8 +91,8 @@ define([
 								value = component.long_name;
 							}
 							$( "input[name='" + name + "']", $je.parent() ).val( value );
-							if ( placeChanged ) {
-								placeChanged( value, autocomplete );
+							if ( args.change ) {
+								args.change( value, autocomplete );
 							}
 						});
 					}
