@@ -91,10 +91,10 @@ define([
 								value = component.long_name;
 							}
 							$( "input[name='" + name + "']", $je.parent() ).val( value );
-							if ( args.change ) {
-								args.change( value, autocomplete );
-							}
 						});
+					}
+					if ( args.change ) {
+						args.change( autocomplete );
 					}
 				});
 			}
