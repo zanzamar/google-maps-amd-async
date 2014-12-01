@@ -8,7 +8,7 @@ Includes methods for basic interaction with google maps and places.
 ### Revisions
 
  -  __1.0.0:__ Initial Release
- -  __1.0.1:__ Added the ability to have a callback when the google autocomplete place changed.
+ -  __1.1.0:__ Added the ability to have a callback when the google autocomplete place changed.
 
 ### Tools Utilized
 
