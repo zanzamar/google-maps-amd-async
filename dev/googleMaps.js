@@ -65,6 +65,7 @@ define([
 		 *
 		***********************************************************************/
 		autoComplete: function( args ) {
+			var self = this;
 			var $je = args.$je;
 			if ( !$je.hasClass( "google-auto-complete-attached" ) ) {
 				$je.addClass( "google-auto-complete-attached" );
@@ -73,33 +74,47 @@ define([
 					options.types = [ "(cities)" ];
 					options.componentRestrictions = { country: "us" };
 				}
-				var autocomplete = new google.maps.places.Autocomplete( $je[ 0 ], options );
-				google.maps.event.addListener( autocomplete, 'place_changed', function() {
-					var place = autocomplete.getPlace();
-					if ( place && place.address_components ) {
-						place.address_components.forEach( function( component ) {
-							var name = "";
-							var value = "";
-							if ( component.types.indexOf( "locality" ) != -1 ) {
-								name = "city";
-								value = component.long_name;
-							} else if ( component.types.indexOf( "administrative_area_level_1" ) != -1 ) {
-								name = "state";
-								value = component.short_name;
-							} else if ( component.types.indexOf( "postal_code" ) != -1 ) {
-								name = "postal_code";
-								value = component.long_name;
-							}
-							$( "input[name='" + name + "']", $je.parent() ).val( value );
-						});
-					}
-					if ( args.change ) {
-						args.change( autocomplete );
+				google.maps.event.addListener(
+					new google.maps.places.Autocomplete( $je[ 0 ], options ),
+					'place_changed',
+					args.change
+				);
+			}
+		},
+
+		/***********************************************************************
+		 *
+		 * getAutocompleteValues
+		 *
+		 * Returns the values we are calculating from the autcompelte based
+		 * upon the type of data returned.
+		 *
+		***********************************************************************/
+		getAutocompleteValues: function( args ) {
+			var place = args.autocomplete.getPlace();
+			var values = {};
+			if ( place && place.address_components ) {
+				var componentMap = {
+					"street_number": "streetNumber",
+					"route": "street",
+					"locality": "city",
+					"administrative_area_level_1": "state",
+					"administrative_area_level_2": "county",
+					"postal_code": "postalCode",
+					"country": "country"
+				};
+				place.address_components.forEach( function( component ) {
+					for ( var i in componentMap ) {
+						if ( component.types.indexOf( i ) != -1 ) {
+							values[ componentMap[ i ] ] = component.short_name;
+						}
 					}
 				});
 			}
+			args.callback( values );
 		}
 	};
+
 
 	/***************************************************************************
 	 *
